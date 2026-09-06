@@ -1,23 +1,20 @@
-# .github/workflows/build.yml
 name: Build APK
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
     branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4 # Обновляем до v4 для надежности
+    - uses: actions/checkout@v4
+    
     - name: Set up JDK 17
-      uses: actions/setup-java@v4 # Тоже свежая версия
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
@@ -26,7 +23,7 @@ jobs:
       run: ./gradlew assembleDebug
 
     - name: Upload APK
-      uses: actions/upload-artifact@v4 # Вот здесь была ошибка, теперь v4
+      uses: actions/upload-artifact@v4
       with:
         name: CalcVault-APK
         path: app/build/outputs/apk/debug/app-debug.apk
